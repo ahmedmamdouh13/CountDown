@@ -17,5 +17,7 @@ class MainActivity : AppCompatActivity() {
             is MyResult.Loading -> (data as MyResult.Loading).msg
             is MyResult.Success<*> -> data as MyResult.Success<String>
         }
+
+
     }
 }
