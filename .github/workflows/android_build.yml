@@ -20,3 +20,12 @@ jobs:
 
       - name: Build Project
         run: ./gradlew assemble
+
+      - name: Gradle Command
+        uses: eskatos/gradle-command-action@v1.3.3
+        with:
+          arguments: android_build
+          wrapper-cache-enabled: true
+          dependencies-cache-enabled: true
+          configuration-cache-enabled: true
+
