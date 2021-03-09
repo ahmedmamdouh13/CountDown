@@ -2,6 +2,8 @@ FROM openjdk:8
 
 WORKDIR project/
 
+RUN apt-get clean
+
 # Install Build Essentials
 RUN apt-get update \
     && apt-get install build-essential -y
