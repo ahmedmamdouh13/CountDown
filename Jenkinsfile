@@ -32,9 +32,7 @@ def isDeployCandidate() {
 }
 
 pipeline {
-    agent { dockerfile {
-    filename 'Dockerfile'
-  } }
+    agent { dockerfile true }
     environment {
         appName = 'jenkins-blog'
 
