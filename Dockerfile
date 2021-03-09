@@ -29,4 +29,6 @@ RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;29.0.2" \
     "platforms;android-${ANDROID_VERSION}" \
     "platform-tools"
 
+RUN sudo chmod 777 /var/lib/jenkins/workspace/Testing_internal_testing
+
 CMD ["/bin/bash"]
