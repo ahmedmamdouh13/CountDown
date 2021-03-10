@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-WORKDIR project/
+WORKDIR /home
 
 RUN apt-get clean
 
@@ -10,7 +10,7 @@ RUN apt-get update \
 
 # Set Environment Variables
 ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" \
-    ANDROID_HOME="/usr/local/android-sdk" \
+    ANDROID_HOME="/home/Android/Sdk" \
     ANDROID_VERSION=29
 
 RUN mkdir -p /root/.android && touch /root/.android/repositories.cfg
