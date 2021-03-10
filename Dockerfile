@@ -24,6 +24,8 @@ RUN mkdir "$ANDROID_HOME" .android \
     && echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license" \
     && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
+RUN touch "$ANDROID_HOME" .android/repositories.cfg
+
 RUN chmod -R 777 "$ANDROID_HOME"
 
 
