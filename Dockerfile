@@ -25,7 +25,7 @@ RUN mkdir -p ~/.android/ && touch ~/.android/repositories.cfg && \
 WORKDIR /home/android
 RUN chmod -R 777 "$ANDROID_HOME"
 # Platforms we need (defaults)
-ARG SDK_PACKAGES="build-tools;28.0.3 platforms;android-28"
+ARG SDK_PACKAGES="build-tools;30.0.2 platforms;android-30"
 RUN sdkmanager $SDK_PACKAGES
 
 # User for our build, depends on your system
