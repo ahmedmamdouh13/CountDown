@@ -24,7 +24,7 @@ android {
         applicationId "com.ahmedmamdouh13.ama.countdown"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode computeVersionCode()
+        versionCode 2
         versionName computeVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
