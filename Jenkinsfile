@@ -72,7 +72,8 @@ stages {
 
                     androidApkUpload googleCredentialsId: 'play-store-credentials',
                             filesPattern: "**/outputs/bundle/${VARIANT.toLowerCase()}/*.aab",
-                            trackName: TRACK
+                            trackName: TRACK,
+                         rolloutPercentage: '0'
                 }
             }
         }
