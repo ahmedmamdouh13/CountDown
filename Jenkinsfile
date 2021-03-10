@@ -41,16 +41,9 @@ pipeline {
         KEYSTORE = credentials('keystore')
         STORE_PASSWORD = credentials('storePassword')
     }
-    stages {
- //       stage('Run Tests') {
-  //          steps {
-    //            echo 'Running Tests'
-      //          script {
-   //                 VARIANT = getBuildType()
-     //               sh "./gradlew test${VARIANT}UnitTest"
-       //         }
-         //   }
-       // }
+
+stages {
+
         stage('Build Bundle') {
             when { expression { return isDeployCandidate() } }
             steps {
