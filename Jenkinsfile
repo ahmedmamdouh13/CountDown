@@ -73,7 +73,9 @@ stages {
                     androidApkUpload googleCredentialsId: 'CountDownProject',
                             filesPattern: "**/outputs/bundle/${VARIANT.toLowerCase()}/*.aab",
                             trackName: TRACK,
-                         rolloutPercentage: '0'
+                         rolloutPercentage: '0',
+                        releaseName: '2.0.0'
+                    
                 }
             }
         }
