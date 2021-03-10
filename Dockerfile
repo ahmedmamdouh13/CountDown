@@ -32,6 +32,8 @@ RUN sdkmanager $SDK_PACKAGES
 RUN adduser -u 1000 -h /home/android -D jenkins
 USER jenkins
 
+RUN chmod -R 777 "$ANDROID_HOME"
+
 # Common Gradle settings, customise as you see fit
 ENV GRADLE_OPTS "-Xmx1600m -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
 # Move the Gradle home / cache into the workspace dir
