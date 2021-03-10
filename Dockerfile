@@ -10,7 +10,7 @@ RUN apt-get update \
 
 # Set Environment Variables
 ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" \
-    ANDROID_HOME="/home/Android/Sdk" \
+    ANDROID_HOME="/home" \
     ANDROID_VERSION=29
 
 RUN mkdir -p /root/.android && touch /root/.android/repositories.cfg
