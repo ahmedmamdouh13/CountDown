@@ -23,7 +23,7 @@ RUN mkdir -p ~/.android/ && touch ~/.android/repositories.cfg && \
     ${ANDROID_HOME}/tools/bin/sdkmanager "--update"
 
 WORKDIR /home/android
-
+RUN chmod -R 777 "$ANDROID_HOME"
 # Platforms we need (defaults)
 ARG SDK_PACKAGES="build-tools;28.0.3 platforms;android-28"
 RUN sdkmanager $SDK_PACKAGES
@@ -32,7 +32,6 @@ RUN sdkmanager $SDK_PACKAGES
 RUN adduser -u 1000 -h /home/android -D jenkins
 USER jenkins
 
-RUN chmod -R 777 "/opt"
 
 # Common Gradle settings, customise as you see fit
 ENV GRADLE_OPTS "-Xmx1600m -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
