@@ -1,38 +1,38 @@
-FROM openjdk:8
+FROM adoptopenjdk/openjdk8:alpine
 
-WORKDIR project/
+ENV SDK_TOOLS "4333796"
+ENV ANDROID_HOME "/opt/sdk"
+ENV PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
 
-RUN apt-get clean
+# Install required dependencies
+RUN apk add --no-cache bash git unzip wget && \
+    apk add --virtual .rundeps $runDeps && \
+    rm -rf /tmp/* && \
+    rm -rf /var/cache/apk/*
 
-# Install Build Essentials
-RUN apt-get update \
-    && apt-get install build-essential -y
+# Download and extract Android Tools
+RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-${SDK_TOOLS}.zip -O /tmp/tools.zip && \
+    mkdir -p ${ANDROID_HOME} && \
+    unzip -qq /tmp/tools.zip -d ${ANDROID_HOME} && \
+    rm -v /tmp/tools.zip
 
-# Set Environment Variables
-ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip" \
-  ANDROID_HOME="/usr/local/android-sdk" \
-    ANDROID_VERSION=29
+# Install SDK Packages
+RUN mkdir -p ~/.android/ && touch ~/.android/repositories.cfg && \
+    yes | ${ANDROID_HOME}/tools/bin/sdkmanager "--licenses" && \
+    ${ANDROID_HOME}/tools/bin/sdkmanager "platform-tools" && \    
+    ${ANDROID_HOME}/tools/bin/sdkmanager "--update"
 
+WORKDIR /home/android
 
-# Download Android SDK
-RUN mkdir "$ANDROID_HOME" .android \
-    && cd "$ANDROID_HOME" \
-    && curl -o sdk.zip $SDK_URL \
-    && unzip sdk.zip \
-    && rm sdk.zip \
-    && mkdir "$ANDROID_HOME/licenses" || true \
-    && echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license" \
-    && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+# Platforms we need (defaults)
+ARG SDK_PACKAGES="build-tools;28.0.3 platforms;android-28"
+RUN sdkmanager $SDK_PACKAGES
 
-RUN touch "$ANDROID_HOME" .android/repositories.cfg
+# User for our build, depends on your system
+RUN adduser -u 1000 -h /home/android -D jenkins
+USER jenkins
 
-RUN chmod -R 777 "$ANDROID_HOME"
-
-
-# Install Android Build Tool and Libraries
-RUN $ANDROID_HOME/tools/bin/sdkmanager --update
-RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;29.0.2" \
-    "platforms;android-${ANDROID_VERSION}" \
-    "platform-tools"
-
-CMD ["/bin/bash"]
+# Common Gradle settings, customise as you see fit
+ENV GRADLE_OPTS "-Xmx1600m -Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
+# Move the Gradle home / cache into the workspace dir
+ENV GRADLE_USER_HOME ./gradle-cache
