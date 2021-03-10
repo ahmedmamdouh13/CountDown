@@ -68,17 +68,11 @@ stages {
                         }
                     }
 
-                    try {
-                        CHANGELOG = readFile(file: 'CHANGELOG.txt')
-                    } catch (err) {
-                        echo "Issue reading CHANGELOG.txt file: ${err.localizedMessage}"
-                        CHANGELOG = ''
-                    }
+              
 
                     androidApkUpload googleCredentialsId: 'play-store-credentials',
                             filesPattern: "**/outputs/bundle/${VARIANT.toLowerCase()}/*.aab",
-                            trackName: TRACK,
-                            recentChangeList: [[language: 'en-US', text: CHANGELOG]]
+                            trackName: TRACK
                 }
             }
         }
