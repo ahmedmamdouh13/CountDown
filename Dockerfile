@@ -13,6 +13,7 @@ ENV SDK_URL="https://dl.google.com/android/repository/sdk-tools-linux-3859397.zi
   ANDROID_HOME="/usr/local/android-sdk" \
     ANDROID_VERSION=29
 
+RUN chmod -R 777 "$ANDROID_HOME"
 
 # Download Android SDK
 RUN mkdir "$ANDROID_HOME" .android \
@@ -23,8 +24,8 @@ RUN mkdir "$ANDROID_HOME" .android \
     && mkdir "$ANDROID_HOME/licenses" || true \
     && echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > "$ANDROID_HOME/licenses/android-sdk-license" \
     && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+    && yes | sdkmanager --licenses
 
-RUN chmod -R 777 "$ANDROID_HOME"
 
 # Install Android Build Tool and Libraries
 RUN $ANDROID_HOME/tools/bin/sdkmanager --update
