@@ -41,7 +41,9 @@ pipeline {
         KEYSTORE = credentials('keystore')
         STORE_PASSWORD = credentials('storePassword')
     }
+
 stages {
+
         stage('Build Bundle') {
             when { expression { return isDeployCandidate() } }
             steps {
